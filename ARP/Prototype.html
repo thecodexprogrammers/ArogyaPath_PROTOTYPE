@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArogyaPath — Healing India. Teaching India.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C2B27;
+    --paper:#FBF6EC;
+    --teal:#0F4C45;
+    --teal-deep:#0A332E;
+    --saffron:#F2A93B;
+    --terracotta:#C1502E;
+    --sage:#9CB89E;
+    --line: rgba(28,43,39,0.14);
+    --shadow: 0 10px 30px rgba(10,51,46,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Work Sans', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Fraunces', serif;}
+  .deva{font-family:'Noto Sans Devanagari', sans-serif;}
+
+  /* ===================== INTRO ANIMATION ===================== */
+  #intro{
+    position:fixed; inset:0; z-index:999;
+    background:var(--teal-deep);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    overflow:hidden;
+    transition: transform 1.1s cubic-bezier(.76,0,.24,1), opacity .9s ease;
+  }
+  #intro.leave{ transform:translateY(-100%); }
+  #intro svg{ width:min(620px, 80vw); height:auto; }
+  .road-path{
+    fill:none; stroke:var(--saffron); stroke-width:3;
+    stroke-linecap:round;
+    stroke-dasharray:1400;
+    stroke-dashoffset:1400;
+    animation: draw 2.1s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  .pulse-path{
+    fill:none; stroke:#E8F0E9; stroke-width:2.4;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:600; stroke-dashoffset:600;
+    animation: draw 1.2s ease-out forwards;
+    animation-delay: 1.7s;
+    opacity:0;
+  }
+  .pulse-path{ animation: draw 1.2s ease-out forwards, fadein .1s forwards; animation-delay:1.7s,1.7s;}
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes fadein{ to{opacity:1;} }
+  .dot{
+    fill:var(--saffron);
+    opacity:0;
+    animation: dotpop .5s ease forwards;
+    animation-delay: 2.05s;
+  }
+  @keyframes dotpop{ from{opacity:0; transform:scale(0);} to{opacity:1; transform:scale(1);} }
+
+  .intro-word{
+    margin-top:28px;
+    opacity:0;
+    color:#F5EFE0;
+    letter-spacing:0.4px;
+    font-size:clamp(2rem, 6vw, 3.4rem);
+    font-weight:600;
+    animation: riseIn .9s cubic-bezier(.2,.8,.2,1) forwards;
+    animation-delay: 2.15s;
+    text-align:center;
+  }
+  .intro-tagline{
+    margin-top:10px;
+    opacity:0;
+    color:var(--sage);
+    font-size:clamp(.85rem,2vw,1.05rem);
+    letter-spacing:3px;
+    text-transform:uppercase;
+    animation: riseIn .9s cubic-bezier(.2,.8,.2,1) forwards;
+    animation-delay: 2.4s;
+  }
+  @keyframes riseIn{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+
+  .skip-btn{
+    position:absolute; bottom:28px; right:28px;
+    color:#F5EFE0; background:transparent; border:1px solid rgba(245,239,224,0.3);
+    padding:8px 16px; border-radius:30px; font-size:.78rem; letter-spacing:1px;
+    cursor:pointer; opacity:0; animation: riseIn .6s ease forwards; animation-delay:1s;
+    font-family:'Work Sans',sans-serif;
+  }
+  .skip-btn:hover{ border-color:var(--saffron); color:var(--saffron); }
+
+  /* ===================== SITE CHROME ===================== */
+  #site{ opacity:0; transition:opacity .8s ease; }
+  #site.show{ opacity:1; }
+
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 6vw;
+    background:rgba(251,246,236,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; color:var(--teal-deep); }
+  .logo svg{ width:26px; height:26px; }
+  .navlinks{ display:flex; gap:32px; font-size:.92rem; font-weight:500; }
+  .navlinks a{ color:var(--ink); text-decoration:none; opacity:.75; transition:opacity .2s; }
+  .navlinks a:hover{ opacity:1; }
+  .nav-cta{
+    background:var(--teal); color:#fff; padding:10px 20px; border-radius:30px;
+    font-size:.86rem; font-weight:600; text-decoration:none; border:none; cursor:pointer;
+  }
+  @media (max-width:760px){ .navlinks{display:none;} }
+
+  /* ===================== HERO ===================== */
+  .hero{
+    padding:90px 6vw 70px;
+    display:grid; grid-template-columns:1.1fr .9fr; gap:50px; align-items:center;
+    max-width:1280px; margin:0 auto;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:.78rem; letter-spacing:2px; text-transform:uppercase;
+    color:var(--terracotta); font-weight:600; margin-bottom:18px;
+  }
+  .eyebrow::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--terracotta); }
+  .hero h1{
+    font-size:clamp(2.4rem, 4.6vw, 3.6rem); line-height:1.08; font-weight:600;
+    color:var(--teal-deep);
+  }
+  .hero h1 em{ font-style:italic; color:var(--terracotta); }
+  .hero p.lead{ margin-top:22px; font-size:1.08rem; line-height:1.65; max-width:540px; color:#3a4844; }
+  .hero-actions{ margin-top:32px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary{
+    background:var(--teal); color:#fff; padding:14px 26px; border-radius:30px;
+    font-weight:600; font-size:.95rem; border:none; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    box-shadow:var(--shadow);
+  }
+  .btn-secondary{
+    background:transparent; color:var(--teal-deep); padding:14px 26px; border-radius:30px;
+    font-weight:600; font-size:.95rem; border:1.5px solid var(--line); cursor:pointer; text-decoration:none;
+  }
+  .stat-row{ display:flex; gap:34px; margin-top:42px; flex-wrap:wrap; }
+  .stat-row div{ }
+  .stat-row .num{ font-family:'Fraunces',serif; font-size:1.9rem; font-weight:600; color:var(--teal); }
+  .stat-row .lbl{ font-size:.78rem; color:#5a6a64; max-width:120px; }
+
+  .hero-visual{ position:relative; }
+  .phone{
+    width:280px; margin:0 auto; background:var(--teal-deep); border-radius:34px; padding:14px;
+    box-shadow:0 30px 60px rgba(10,51,46,0.25);
+  }
+  .phone-screen{
+    background:var(--paper); border-radius:24px; padding:18px; min-height:480px; position:relative; overflow:hidden;
+  }
+  .phone-top{ display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .phone-top .pulse-dot{ width:8px; height:8px; border-radius:50%; background:#4CAF50; animation:blink 1.6s infinite; }
+  @keyframes blink{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+  .phone-top span{ font-size:.72rem; color:#5a6a64; font-weight:600; letter-spacing:.5px; }
+  .chat-bubble{ padding:10px 14px; border-radius:14px; font-size:.78rem; margin-bottom:10px; max-width:85%; line-height:1.4; }
+  .bubble-user{ background:var(--teal); color:#fff; margin-left:auto; border-bottom-right-radius:4px; }
+  .bubble-bot{ background:#fff; border:1px solid var(--line); border-bottom-left-radius:4px; }
+  .bubble-bot b{ color:var(--terracotta); }
+
+  /* ===================== SECTIONS ===================== */
+  section{ padding:80px 6vw; max-width:1280px; margin:0 auto; }
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  .section-head .eyebrow{ color:var(--teal); }
+  .section-head .eyebrow::before{ background:var(--teal); }
+  .section-head h2{ font-size:clamp(1.8rem,3.4vw,2.5rem); color:var(--teal-deep); font-weight:600; }
+  .section-head p{ margin-top:14px; color:#4a5852; line-height:1.6; }
+
+  .module-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin-bottom:10px; }
+  @media (max-width:1000px){ .module-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:560px){ .module-grid{grid-template-columns:1fr;} }
+  .module-card{
+    background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px 18px;
+    cursor:pointer; transition:transform .25s ease, box-shadow .25s ease; text-align:left;
+  }
+  .module-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow); }
+  .module-card.active{ border-color:var(--teal); background:#F3F8F4; }
+  .module-card .icon{ width:38px; height:38px; margin-bottom:14px; }
+  .module-card h4{ font-size:.95rem; font-weight:700; color:var(--teal-deep); margin-bottom:6px; }
+  .module-card p{ font-size:.78rem; color:#5a6a64; line-height:1.4; }
+
+  /* DEMO PANEL */
+  .demo-panel{
+    background:#fff; border:1px solid var(--line); border-radius:24px; padding:0; overflow:hidden;
+    box-shadow:var(--shadow); margin-top:24px;
+  }
+  .demo-panel-head{
+    background:var(--teal-deep); color:#F5EFE0; padding:18px 26px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .demo-panel-head h3{ font-size:1.05rem; font-weight:600; }
+  .demo-tag{ font-size:.7rem; background:var(--saffron); color:var(--teal-deep); padding:4px 10px; border-radius:20px; font-weight:700; letter-spacing:.5px; }
+  .demo-body{ padding:28px; min-height:340px; }
+
+  /* Symptom Checker */
+  .sc-chat{ display:flex; flex-direction:column; gap:12px; max-width:640px; margin:0 auto 20px; min-height:170px; }
+  .sc-bubble{ padding:12px 16px; border-radius:16px; font-size:.92rem; line-height:1.55; max-width:80%; animation:popIn .3s ease; }
+  @keyframes popIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .sc-user{ background:var(--teal); color:#fff; margin-left:auto; border-bottom-right-radius:4px; }
+  .sc-bot{ background:#F3F0E6; border:1px solid var(--line); border-bottom-left-radius:4px; }
+  .sc-bot.urgent{ border-color:var(--terracotta); background:#FBEAE3; }
+  .urgency-tag{ display:inline-block; font-size:.68rem; font-weight:700; padding:3px 10px; border-radius:20px; margin-bottom:8px; letter-spacing:.4px; }
+  .urgency-low{ background:#E1EFDF; color:#2E6B3E; }
+  .urgency-med{ background:#FCEFD6; color:#946417; }
+  .urgency-high{ background:#FBDCD2; color:var(--terracotta); }
+  .sc-input-row{ display:flex; gap:10px; max-width:640px; margin:0 auto; flex-wrap:wrap; }
+  .sc-input-row input{
+    flex:1; min-width:180px; padding:13px 16px; border-radius:30px; border:1.5px solid var(--line);
+    font-family:inherit; font-size:.92rem; outline:none;
+  }
+  .sc-input-row input:focus{ border-color:var(--teal); }
+  .sc-input-row button{
+    background:var(--teal); color:#fff; border:none; padding:13px 22px; border-radius:30px;
+    font-weight:600; cursor:pointer; font-size:.9rem;
+  }
+  .sc-chips{ display:flex; gap:8px; flex-wrap:wrap; max-width:640px; margin:14px auto 0; }
+  .chip{ font-size:.76rem; padding:7px 14px; border-radius:20px; background:#F3F0E6; border:1px solid var(--line); cursor:pointer; }
+  .chip:hover{ background:#E7E1D2; }
+
+  /* Courses */
+  .course-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  @media (max-width:760px){ .course-grid{grid-template-columns:1fr;} }
+  .course-card{ border:1px solid var(--line); border-radius:16px; padding:20px; cursor:pointer; transition:.2s; }
+  .course-card:hover{ box-shadow:var(--shadow); }
+  .course-card h4{ font-size:.98rem; color:var(--teal-deep); margin-bottom:6px; }
+  .course-card .meta{ font-size:.74rem; color:#5a6a64; margin-bottom:14px; }
+  .progress-bar{ height:7px; background:#EDE8DA; border-radius:10px; overflow:hidden; margin-bottom:10px; }
+  .progress-fill{ height:100%; background:var(--saffron); width:0%; transition:width 1s ease; border-radius:10px; }
+  .course-card .pct{ font-size:.76rem; font-weight:600; color:var(--teal); }
+  .course-card.expanded .lesson-list{ max-height:300px; margin-top:14px; }
+  .lesson-list{ max-height:0; overflow:hidden; transition:max-height .35s ease; }
+  .lesson-list div{ font-size:.8rem; padding:7px 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; }
+
+  /* Teleconsult */
+  .tele-form{ display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:680px; margin:0 auto; }
+  @media (max-width:560px){ .tele-form{grid-template-columns:1fr;} }
+  .tele-form label{ font-size:.78rem; font-weight:600; color:#3a4844; display:block; margin-bottom:6px; }
+  .tele-form select, .tele-form input{
+    width:100%; padding:11px 14px; border-radius:10px; border:1.5px solid var(--line); font-family:inherit; font-size:.88rem; outline:none;
+  }
+  .tele-form select:focus, .tele-form input:focus{ border-color:var(--teal); }
+  .tele-form .full{ grid-column:1/-1; }
+  .tele-confirm{
+    margin-top:20px; padding:18px 22px; border-radius:14px; background:#EAF4EC; border:1px solid #BFE0C6;
+    display:none; max-width:680px; margin-left:auto; margin-right:auto;
+  }
+  .tele-confirm.show{ display:block; animation:popIn .3s ease; }
+  .tele-confirm b{ color:#2E6B3E; }
+
+  /* Dashboard */
+  .dash-grid{ display:grid; grid-template-columns:1.3fr .7fr; gap:24px; }
+  @media (max-width:860px){ .dash-grid{grid-template-columns:1fr;} }
+  .dash-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+  @media (max-width:560px){ .dash-cards{grid-template-columns:1fr;} }
+  .dash-card{ border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .dash-card .num{ font-family:'Fraunces',serif; font-size:1.6rem; color:var(--teal); font-weight:600; }
+  .dash-card .lbl{ font-size:.72rem; color:#5a6a64; margin-top:4px; }
+  .bars{ display:flex; align-items:flex-end; gap:10px; height:180px; border-bottom:1.5px solid var(--line); padding:0 4px; }
+  .bar{ flex:1; background:linear-gradient(180deg, var(--saffron), var(--terracotta)); border-radius:6px 6px 0 0; height:0%; transition:height 1.2s cubic-bezier(.2,.8,.2,1); position:relative; }
+  .bar span{ position:absolute; bottom:-22px; left:0; right:0; text-align:center; font-size:.68rem; color:#5a6a64; }
+  .district-list div{ display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--line); font-size:.82rem; }
+  .district-list .tag{ font-size:.65rem; padding:2px 8px; border-radius:10px; font-weight:700; }
+  .tag-good{ background:#E1EFDF; color:#2E6B3E; }
+  .tag-watch{ background:#FCEFD6; color:#946417; }
+
+  /* Stack section */
+  .stack-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  @media (max-width:860px){ .stack-grid{grid-template-columns:repeat(2,1fr);} }
+  .stack-card{ border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .stack-card .layer{ font-size:.68rem; text-transform:uppercase; letter-spacing:1px; color:var(--terracotta); font-weight:700; margin-bottom:8px; }
+  .stack-card .tech{ font-weight:600; color:var(--teal-deep); margin-bottom:6px; }
+  .stack-card .why{ font-size:.78rem; color:#5a6a64; line-height:1.4; }
+
+  /* Architecture diagram */
+  .arch-wrap{ background:#fff; border:1px solid var(--line); border-radius:20px; padding:30px; overflow-x:auto; }
+  .arch-row{ display:flex; gap:14px; margin-bottom:14px; flex-wrap:nowrap; min-width:680px; }
+  .arch-box{ flex:1; background:#F3F8F4; border:1px solid #CFE3D2; border-radius:12px; padding:14px; text-align:center; font-size:.78rem; font-weight:600; color:var(--teal-deep); }
+  .arch-box.alt{ background:#FBF3E4; border-color:#EBD4A4; }
+  .arch-arrow{ text-align:center; color:var(--sage); font-size:1.1rem; margin:2px 0; }
+
+  footer{ background:var(--teal-deep); color:#E7E1D2; padding:60px 6vw 30px; margin-top:60px; }
+  .footer-grid{ max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; }
+  footer h3{ font-family:'Fraunces',serif; font-size:1.4rem; margin-bottom:8px; }
+  footer .tag{ color:var(--saffron); font-size:.85rem; }
+  .footer-bottom{ max-width:1280px; margin:40px auto 0; padding-top:20px; border-top:1px solid rgba(255,255,255,0.12); font-size:.76rem; color:#9aab a3; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  ::selection{ background:var(--saffron); color:var(--teal-deep); }
+</style>
+</head>
+<body>
+
+<!-- ===================== INTRO ANIMATION ===================== -->
+<div id="intro">
+  <button class="skip-btn" onclick="skipIntro()">Skip ↦</button>
+  <svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+    <path class="road-path" d="M 20 220 C 150 220, 150 120, 280 120 S 450 30, 580 30" />
+    <path class="pulse-path" d="M 60 180 L 130 180 L 150 140 L 175 215 L 200 100 L 220 180 L 540 180" />
+    <circle class="dot" cx="580" cy="30" r="7"/>
+  </svg>
+  <div class="intro-word"><span class="deva">आरोग्यपथ</span> &nbsp;ArogyaPath</div>
+  <div class="intro-tagline">Healing India · Teaching India</div>
+</div>
+
+<!-- ===================== SITE ===================== -->
+<div id="site">
+  <nav>
+    <div class="logo">
+      <svg viewBox="0 0 24 24"><path d="M2 18 C7 18 7 10 12 10 S17 4 22 4" fill="none" stroke="#C1502E" stroke-width="2" stroke-linecap="round"/></svg>
+      ArogyaPath
+    </div>
+    <div class="navlinks">
+      <a href="#modules">Modules</a>
+      <a href="#demo">Live Demo</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#roadmap">Roadmap</a>
+    </div>
+    <a href="#demo" class="nav-cta">Try the Demo</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Evolothon 1.0 · Round 2 Prototype</div>
+      <h1>Bharat's <em>health</em> + <em>education</em> super platform, built for the next billion.</h1>
+      <p class="lead">A vernacular-first AI symptom checker, adaptive health courses, and teleconsultation — offline-capable, ABDM-ready, and built for Tier 2/3/4 India. This is a live, interactive prototype of the system.</p>
+      <div class="hero-actions">
+        <a href="#demo" class="btn-primary">▶ Launch Live Demo</a>
+        <a href="#architecture" class="btn-secondary">View Architecture</a>
+      </div>
+      <div class="stat-row">
+        <div><div class="num">22+</div><div class="lbl">Indian languages targeted</div></div>
+        <div><div class="num">70%</div><div class="lbl">Rural India lacks medical access</div></div>
+        <div><div class="num">1M+</div><div class="lbl">User target by Bharat Reach phase</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-top"><div class="pulse-dot"></div><span>AI SYMPTOM CHECKER · हिंदी</span></div>
+          <div class="chat-bubble bubble-user">मुझे 3 दिन से बुखार और सिरदर्द है</div>
+          <div class="chat-bubble bubble-bot"><b>मध्यम जोखिम</b> — आराम करें, पानी पिएं। अगर बुखार 102°F से ऊपर जाए तो डॉक्टर से तुरंत बात करें।</div>
+          <div class="chat-bubble bubble-user">सीने में दर्द भी है</div>
+          <div class="chat-bubble bubble-bot"><b>⚠ तुरंत संपर्क करें</b> — यह एक गंभीर लक्षण हो सकता है। आपको तुरंत टेलि-परामर्श से जोड़ा जा रहा है।</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULES -->
+  <section id="modules">
+    <div class="section-head">
+      <div class="eyebrow">Core MVP Modules</div>
+      <h2>Five modules. One offline-first app.</h2>
+      <p>Click a module to load it into the live demo panel below.</p>
+    </div>
+    <div class="module-grid" id="moduleGrid">
+      <button class="module-card active" data-target="sc">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M3 12c2-6 6-6 9 0s7 6 9 0" stroke="#0F4C45" stroke-width="2" stroke-linecap="round"/></svg>
+        <h4>AI Symptom Checker</h4>
+        <p>Hindi-first triage with escalation logic.</p>
+      </button>
+      <button class="module-card" data-target="courses">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 6h12a2 2 0 0 1 2 2v12H6a2 2 0 0 1-2-2V6z" stroke="#0F4C45" stroke-width="2"/><path d="M4 6a2 2 0 0 1 2-2h12" stroke="#0F4C45" stroke-width="2"/></svg>
+        <h4>Adaptive Courses</h4>
+        <p>Micro-learning for public & paramedics.</p>
+      </button>
+      <button class="module-card" data-target="tele">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="13" height="12" rx="2" stroke="#0F4C45" stroke-width="2"/><path d="M21 9l-5 3 5 3V9z" stroke="#0F4C45" stroke-width="2" stroke-linejoin="round"/></svg>
+        <h4>Tele-Consultation</h4>
+        <p>Low-bandwidth doctor connect & queue.</p>
+      </button>
+      <button class="module-card" data-target="dash">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M12 20V4M20 20v-7" stroke="#0F4C45" stroke-width="2" stroke-linecap="round"/></svg>
+        <h4>Community Dashboard</h4>
+        <p>Anonymised village-level health insight.</p>
+      </button>
+      <button class="module-card" data-target="sync">
+        <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 0 1 14-5M20 12a8 8 0 0 1-14 5" stroke="#0F4C45" stroke-width="2" stroke-linecap="round"/><path d="M18 3v5h-5M6 21v-5h5" stroke="#0F4C45" stroke-width="2" stroke-linecap="round"/></svg>
+        <h4>Offline Sync Layer</h4>
+        <p>Local-first storage, background sync.</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- LIVE DEMO -->
+  <section id="demo">
+    <div class="section-head">
+      <div class="eyebrow">Functional Prototype</div>
+      <h2>Live, working demo</h2>
+      <p>Every panel below runs real interaction logic in your browser — type real symptoms, book a real slot, expand real courses.</p>
+    </div>
+
+    <div class="demo-panel">
+      <div class="demo-panel-head">
+        <h3 id="panelTitle">AI Symptom Checker</h3>
+        <div class="demo-tag">LIVE PROTOTYPE</div>
+      </div>
+      <div class="demo-body">
+
+        <!-- Symptom checker -->
+        <div class="demo-view" id="view-sc">
+          <div class="sc-chat" id="scChat"></div>
+          <div class="sc-input-row">
+            <input id="scInput" type="text" placeholder="Type your symptoms in Hindi or English… e.g. tez bukhar aur khansi" />
+            <button onclick="sendSymptom()">Check</button>
+          </div>
+          <div class="sc-chips">
+            <span class="chip" onclick="quickSymptom('बुखार और खांसी है')">बुखार और खांसी</span>
+            <span class="chip" onclick="quickSymptom('सीने में दर्द हो रहा है')">सीने में दर्द (urgent)</span>
+            <span class="chip" onclick="quickSymptom('पेट में हल्का दर्द है')">पेट दर्द</span>
+            <span class="chip" onclick="quickSymptom('सांस लेने में तकलीफ है')">सांस की तकलीफ (urgent)</span>
+            <span class="chip" onclick="quickSymptom('सिरदर्द और थकान है')">सिरदर्द</span>
+          </div>
+        </div>
+
+        <!-- Courses -->
+        <div class="demo-view" id="view-courses" style="display:none">
+          <div class="course-grid" id="courseGrid"></div>
+        </div>
+
+        <!-- Teleconsult -->
+        <div class="demo-view" id="view-tele" style="display:none">
+          <div class="tele-form">
+            <div><label>Patient name</label><input id="teleName" placeholder="e.g. Ramesh Kumar"></div>
+            <div><label>Preferred language</label>
+              <select id="teleLang"><option>Hindi</option><option>Bhojpuri</option><option>Marathi</option><option>Tamil</option><option>Bengali</option><option>English</option></select>
+            </div>
+            <div><label>Concern category</label>
+              <select id="teleCat"><option>General physician</option><option>Maternal health</option><option>Paediatrics</option><option>Skin / dermatology</option><option>Mental health</option></select>
+            </div>
+            <div><label>Preferred slot</label><input id="teleSlot" type="datetime-local"></div>
+            <div class="full"><label>Note for doctor (optional)</label><input id="teleNote" placeholder="Briefly describe the issue"></div>
+          </div>
+          <div style="max-width:680px; margin:18px auto 0; text-align:center;">
+            <button class="btn-primary" onclick="bookTele()">Confirm Booking</button>
+          </div>
+          <div class="tele-confirm" id="teleConfirm"></div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="demo-view" id="view-dash" style="display:none">
+          <div class="dash-grid">
+            <div>
+              <div class="dash-cards">
+                <div class="dash-card"><div class="num" id="dCases">—</div><div class="lbl">Triage interactions (7d)</div></div>
+                <div class="dash-card"><div class="num" id="dRedflag">—</div><div class="lbl">High-urgency escalations</div></div>
+                <div class="dash-card"><div class="num" id="dCourse">—</div><div class="lbl">Course completions</div></div>
+              </div>
+              <div class="bars" id="barsRow" style="position:relative; margin-bottom:30px;"></div>
+            </div>
+            <div>
+              <h4 style="font-size:.9rem; margin-bottom:12px; color:var(--teal-deep);">District watchlist</h4>
+              <div class="district-list" id="districtList"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sync -->
+        <div class="demo-view" id="view-sync" style="display:none; text-align:center;">
+          <p style="max-width:480px; margin:0 auto 22px; color:#4a5852;">Simulating a rural device going offline, capturing data locally, and reconciling once connectivity returns.</p>
+          <button class="btn-primary" onclick="runSync()">Simulate Offline → Sync</button>
+          <div id="syncLog" style="max-width:480px; margin:24px auto 0; text-align:left; font-size:.85rem;"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture">
+    <div class="section-head">
+      <div class="eyebrow">System Architecture</div>
+      <h2>Modular microservices behind a single gateway</h2>
+      <p>Health and education domains scale independently, sharing identity, notification, and sync layers.</p>
+    </div>
+    <div class="arch-wrap">
+      <div class="arch-row">
+        <div class="arch-box">Flutter Mobile App (offline-first)</div>
+        <div class="arch-box">React Web Dashboard</div>
+      </div>
+      <div class="arch-arrow">↓ REST / GraphQL</div>
+      <div class="arch-row"><div class="arch-box" style="flex:1 1 100%;">API Gateway — NGINX / Kong (auth, rate-limit, routing)</div></div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-box">Identity & Auth</div>
+        <div class="arch-box">Symptom Checker (AI)</div>
+        <div class="arch-box">Tele-Consultation</div>
+        <div class="arch-box">Learning Engine</div>
+        <div class="arch-box">Community Dashboard</div>
+      </div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-row"><div class="arch-box alt" style="flex:1 1 100%;">AI Orchestration Layer — FastAPI wraps Claude API, manages prompt templates, logs triage audit trail</div></div>
+      <div class="arch-arrow">↓</div>
+      <div class="arch-row">
+        <div class="arch-box">PostgreSQL (core records)</div>
+        <div class="arch-box">Firebase (realtime)</div>
+        <div class="arch-box">Redis (cache/queue)</div>
+        <div class="arch-box">Cloudflare R2 (media)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="section-head">
+      <div class="eyebrow">Technology Stack</div>
+      <h2>Chosen for rural-Bharat constraints</h2>
+      <p>Low-bandwidth resilience, vernacular NLP, and rapid iteration for a 5-person founding team.</p>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card"><div class="layer">Mobile</div><div class="tech">Flutter (Dart)</div><div class="why">Single codebase, smaller APK than React Native for low-end Android.</div></div>
+      <div class="stack-card"><div class="layer">AI Layer</div><div class="tech">Claude API + intent classifier</div><div class="why">Vernacular reasoning with structured triage output via tool use.</div></div>
+      <div class="stack-card"><div class="layer">Speech</div><div class="tech">Bhashini + Whisper fallback</div><div class="why">Native multilingual ASR/TTS across 10+ Indian languages.</div></div>
+      <div class="stack-card"><div class="layer">Video</div><div class="tech">WebRTC (Jitsi self-hosted)</div><div class="why">Low-cost, low-bandwidth, no per-minute licensing.</div></div>
+      <div class="stack-card"><div class="layer">Database</div><div class="tech">PostgreSQL (Supabase)</div><div class="why">Relational integrity for health records, row-level security.</div></div>
+      <div class="stack-card"><div class="layer">Hosting</div><div class="tech">AWS ap-south-1 + ECS Fargate</div><div class="why">India data residency, stateless scaling.</div></div>
+      <div class="stack-card"><div class="layer">Compliance</div><div class="tech">ABDM + FHIR + DPDP 2023</div><div class="why">Interoperable with govt. health stack, consent-aligned.</div></div>
+      <div class="stack-card"><div class="layer">Safety</div><div class="tech">Deterministic rules-engine</div><div class="why">Overrides AI on red-flag symptoms, routes to emergency care.</div></div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap">
+    <div class="section-head">
+      <div class="eyebrow">18-Month Deployment Roadmap</div>
+      <h2>MVP → 1M+ users</h2>
+    </div>
+    <div class="arch-wrap" style="overflow-x:auto;">
+      <div style="display:flex; gap:0; min-width:760px;">
+        <div style="flex:1; padding:16px; border-right:1px solid var(--line);"><b style="color:var(--teal);">Q3 2027 · MVP</b><p style="font-size:.8rem; margin-top:8px; color:#5a6a64;">Hindi symptom checker, 3 courses, Android beta — 500 beta users</p></div>
+        <div style="flex:1; padding:16px; border-right:1px solid var(--line);"><b style="color:var(--teal);">Q4 2027 · Expand</b><p style="font-size:.8rem; margin-top:8px; color:#5a6a64;">5 languages, Jitsi tele-consult, 1 hospital partner</p></div>
+        <div style="flex:1; padding:16px; border-right:1px solid var(--line);"><b style="color:var(--teal);">Q1 2028 · Scale</b><p style="font-size:.8rem; margin-top:8px; color:#5a6a64;">EdTech GA, recommendation engine v2 — 10,000 users</p></div>
+        <div style="flex:1; padding:16px;"><b style="color:var(--terracotta);">Q3 2028 · Bharat Reach</b><p style="font-size:.8rem; margin-top:8px; color:#5a6a64;">B2G pilot via ABDM sandbox, offline-first GA — 1M+ target</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h3>ArogyaPath</h3>
+        <div class="tag">Healing India. Teaching India.</div>
+      </div>
+      <div style="max-width:380px; font-size:.85rem; line-height:1.6; color:#cfd9d2;">
+        BY TEAM -  THECODEX — JUST A WORKING PROTOTYPE for Evolothon 1.0, Round 2
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ArogyaPath</span>
+      <span>Built for Bharat's Tier 2/3/4 population</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ===================== INTRO SEQUENCE ===================== */
+const intro = document.getElementById('intro');
+const site = document.getElementById('site');
+function finishIntro(){
+  intro.classList.add('leave');
+  site.classList.add('show');
+  setTimeout(()=> intro.style.display='none', 1100);
+}
+function skipIntro(){ finishIntro(); }
+setTimeout(finishIntro, 3600);
+
+/* ===================== MODULE SWITCHING ===================== */
+const titles = { sc:'AI Symptom Checker', courses:'Adaptive Health Courses', tele:'Tele-Consultation Booking', dash:'Community Health Dashboard', sync:'Offline-First Sync Layer' };
+document.querySelectorAll('.module-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    document.querySelectorAll('.module-card').forEach(c=>c.classList.remove('active'));
+    card.classList.add('active');
+    const t = card.dataset.target;
+    document.getElementById('panelTitle').textContent = titles[t];
+    document.querySelectorAll('.demo-view').forEach(v=>v.style.display='none');
+    document.getElementById('view-'+t).style.display='block';
+    document.getElementById('demo').scrollIntoView({behavior:'smooth', block:'start'});
+    if(t==='courses' && !coursesBuilt) buildCourses();
+    if(t==='dash' && !dashBuilt) buildDashboard();
+  });
+});
+
+/* ===================== SYMPTOM CHECKER ===================== */
+const scChat = document.getElementById('scChat');
+function addBubble(text, who, urgency){
+  const div = document.createElement('div');
+  div.className = 'sc-bubble ' + (who==='user' ? 'sc-user' : 'sc-bot' + (urgency==='high' ? ' urgent' : ''));
+  if(who==='bot' && urgency){
+    const tagClass = urgency==='high' ? 'urgency-high' : urgency==='med' ? 'urgency-med' : 'urgency-low';
+    const tagText = urgency==='high' ? '⚠ HIGH URGENCY' : urgency==='med' ? 'MODERATE' : 'LOW RISK';
+    div.innerHTML = `<span class="urgency-tag ${tagClass}">${tagText}</span><br>${text}`;
+  } else {
+    div.textContent = text;
+  }
+  scChat.appendChild(div);
+  scChat.scrollTop = scChat.scrollHeight;
+}
+function classify(text){
+  const t = text.toLowerCase();
+  const redFlags = ['सीने में दर्द','chest pain','सांस','breath','behosh','बेहोश','severe bleeding','khoon'];
+  const medFlags = ['बुखार','fever','खांसी','cough','उल्टी','vomit','दर्द','pain'];
+  if(redFlags.some(f=>t.includes(f))){
+    return {urgency:'high', reply:'यह एक रेड-फ्लैग लक्षण हो सकता है। हमारा सेफ्टी रूल्स-इंजन AI सुझाव को ओवरराइड कर रहा है — आपको तुरंत टेलि-परामर्श और निकटतम आपातकालीन सेवा से जोड़ा जा रहा है। कृपया अभी डॉक्टर से संपर्क करें।'};
+  }
+  if(medFlags.some(f=>t.includes(f))){
+    return {urgency:'med', reply:'लक्षणों के अनुसार यह मध्यम जोखिम श्रेणी में है। आराम करें, तरल पदार्थ लें, और 24 घंटे में सुधार न होने पर टेली-परामर्श बुक करें। संबंधित स्वास्थ्य कोर्स भी सुझाए जा रहे हैं।'};
+  }
+  return {urgency:'low', reply:'दिए गए लक्षण फिलहाल कम जोखिम वाले लगते हैं। हम आपके लिए एक प्रासंगिक स्वास्थ्य-शिक्षा माइक्रो-कोर्स सुझा रहे हैं ताकि आप घर पर बेहतर देखभाल कर सकें।'};
+}
+function sendSymptom(){
+  const input = document.getElementById('scInput');
+  const val = input.value.trim();
+  if(!val) return;
+  addBubble(val, 'user');
+  input.value = '';
+  setTimeout(()=>{
+    const r = classify(val);
+    addBubble(r.reply, 'bot', r.urgency);
+  }, 550);
+}
+function quickSymptom(text){
+  document.getElementById('scInput').value = text;
+  sendSymptom();
+}
+document.getElementById('scInput').addEventListener('keydown', e=>{ if(e.key==='Enter') sendSymptom(); });
+addBubble('नमस्ते! अपने लक्षण हिंदी या अंग्रेज़ी में बताइए — मैं आपकी मदद करूँगा।', 'bot');
+
+/* ===================== COURSES ===================== */
+let coursesBuilt = false;
+const courseData = [
+  {name:'Diabetes & Daily Diet Basics', meta:'12 lessons · Hindi · For general public', pct:42, lessons:['1. What is blood sugar?','2. Building a balanced thali','3. Warning signs to watch','4. When to see a doctor']},
+  {name:'Maternal Health Essentials', meta:'9 lessons · Hindi/Bhojpuri · ASHA workers', pct:68, lessons:['1. Antenatal checkup schedule','2. Nutrition during pregnancy','3. Recognising danger signs']},
+  {name:'First Response: Basic Vitals', meta:'15 lessons · Multi-lingual · Paramedical students', pct:20, lessons:['1. Taking pulse & BP','2. Reading a thermometer','3. CPR fundamentals','4. Triage basics']},
+];
+function buildCourses(){
+  const grid = document.getElementById('courseGrid');
+  courseData.forEach((c,i)=>{
+    const card = document.createElement('div');
+    card.className = 'course-card';
+    card.innerHTML = `<h4>${c.name}</h4><div class="meta">${c.meta}</div>
+      <div class="progress-bar"><div class="progress-fill" id="pf${i}"></div></div>
+      <div class="pct">${c.pct}% complete</div>
+      <div class="lesson-list">${c.lessons.map(l=>`<div>${l}<span>✓</span></div>`).join('')}</div>`;
+    card.addEventListener('click', ()=> card.classList.toggle('expanded'));
+    grid.appendChild(card);
+    setTimeout(()=>{ document.getElementById('pf'+i).style.width = c.pct+'%'; }, 100 + i*150);
+  });
+  coursesBuilt = true;
+}
+
+/* ===================== TELECONSULT ===================== */
+function bookTele(){
+  const name = document.getElementById('teleName').value.trim() || 'Patient';
+  const lang = document.getElementById('teleLang').value;
+  const cat = document.getElementById('teleCat').value;
+  const slot = document.getElementById('teleSlot').value;
+  const queue = Math.floor(Math.random()*6)+2;
+  const box = document.getElementById('teleConfirm');
+  box.innerHTML = `<b>✓ Booking confirmed.</b> ${name}, your ${cat} consultation (${lang}) is queued.
+    ${slot ? `Preferred slot: <b>${new Date(slot).toLocaleString()}</b>.` : ''}
+    You are <b>#${queue}</b> in the queue — estimated wait <b>${queue*7} minutes</b>. A confirmation will be sent via SMS even on low-bandwidth networks.`;
+  box.classList.add('show');
+}
+
+/* ===================== DASHBOARD ===================== */
+let dashBuilt = false;
+function buildDashboard(){
+  document.getElementById('dCases').textContent = '4,812';
+  document.getElementById('dRedflag').textContent = '63';
+  document.getElementById('dCourse').textContent = '1,204';
+  const districts = [
+    {name:'Sitapur, UP', status:'good'}, {name:'Araria, Bihar', status:'watch'},
+    {name:'Barmer, RJ', status:'good'}, {name:'Koraput, Odisha', status:'watch'},
+    {name:'Dhar, MP', status:'good'},
+  ];
+  const list = document.getElementById('districtList');
+  districts.forEach(d=>{
+    const div = document.createElement('div');
+    div.innerHTML = `<span>${d.name}</span><span class="tag ${d.status==='good'?'tag-good':'tag-watch'}">${d.status==='good'?'Stable':'Watch'}</span>`;
+    list.appendChild(div);
+  });
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const vals = [55,70,40,85,60,95,75];
+  const row = document.getElementById('barsRow');
+  vals.forEach((v,i)=>{
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.innerHTML = `<span>${days[i]}</span>`;
+    row.appendChild(bar);
+    setTimeout(()=>{ bar.style.height = v+'%'; }, 150 + i*100);
+  });
+  dashBuilt = true;
+}
+
+/* ===================== SYNC SIMULATION ===================== */
+function runSync(){
+  const log = document.getElementById('syncLog');
+  log.innerHTML = '';
+  const steps = [
+    '📴 Device offline — local Hive storage capturing triage data…',
+    '📝 3 symptom checks + 1 course completion saved locally.',
+    '📶 Connectivity restored — sync layer initiated.',
+    '🔄 Reconciling records (last-write-wins, clinical data flagged for review)…',
+    '✅ Sync complete. 4 records pushed to PostgreSQL & Community Dashboard.'
+  ];
+  steps.forEach((s,i)=>{
+    setTimeout(()=>{
+      const p = document.createElement('div');
+      p.style.padding = '8px 0';
+      p.style.borderTop = i===0 ? 'none' : '1px solid var(--line)';
+      p.textContent = s;
+      log.appendChild(p);
+    }, i*700);
+  });
+}
+</script>
+</body>
+</html>
